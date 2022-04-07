@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taniku/viewmodel/home_viewmodel.dart';
 
+import '../viewmodel/detailNews.dart';
+
 class homePage extends StatefulWidget {
   const homePage({Key? key}) : super(key: key);
 
@@ -45,7 +47,17 @@ class _homePageState extends State<homePage> {
                                       itemCount: viewModel.getNews.length,
                                       itemBuilder: (context, index) {
                                         return InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) =>
+                                                    detailNews(
+                                                      newsImage: viewModel.getNews[index].newsImage.toString(),
+                                                      newsTitle: viewModel.getNews[index].newsTitle.toString(),
+                                                      newsDate: viewModel.getNews[index].newsDate.toString(),
+                                                    )
+                                                )
+                                            );
+                                          },
                                           child: Container(
                                               width: 300,
                                               alignment: Alignment.center,
@@ -87,7 +99,7 @@ class _homePageState extends State<homePage> {
                                             const SizedBox(width: 12,),
                                             Text(viewModel.getNews[index].newsTitle.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                                             const SizedBox(height: 8,),
-                                            Text(viewModel.getNews[index].newsDate.toString())
+                                            Text(viewModel.getNews[index].newsDate.toString()),
                                           ],
                                         ),
                                       ),
