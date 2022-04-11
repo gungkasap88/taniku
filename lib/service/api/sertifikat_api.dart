@@ -11,9 +11,9 @@ class SertifikatApi {
   var client = http.Client();
   var baseUrl = "http://34.126.79.39:81/";
 
-  Future <SertifikatList> getDetailSertifikat(BuildContext context) async {
+  Future <SertifikatList> getDetailSertifikat(String kebunId, BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/kebun/getSertifikatList").replace();
-    var token = 'MjZhYWNiMDE4YzlmYmFmYmIxMjgzNzgyZGFiMTM2NzVlOTQ0MTVkNQ==';
+    var token = 'MzlhZDNjNjlkMGFmOThkOTNjOTVhNDkxMDYzMGQ4ZDIwZjNmZTUyZQ==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ class SertifikatApi {
     }
     var _body = jsonEncode({
       'user_id' : "85",
-      'kebun_id' : "56",
+      'kebun_id' : kebunId,
       'orderBy' : "id",
       'sort' : "asc"
 

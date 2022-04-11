@@ -14,7 +14,7 @@ class KebunApi {
 
   Future <ResponseKebun> getDataKebun(BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/kebun/getKebun").replace();
-    var token = 'MjZhYWNiMDE4YzlmYmFmYmIxMjgzNzgyZGFiMTM2NzVlOTQ0MTVkNQ==';
+    var token = 'MzlhZDNjNjlkMGFmOThkOTNjOTVhNDkxMDYzMGQ4ZDIwZjNmZTUyZQ==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',

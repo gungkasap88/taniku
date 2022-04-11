@@ -19,14 +19,14 @@ class ListKebunViewModel extends ChangeNotifier{
   List<DataL> getSertifikat = [];
   final _sharedPref = shared_pref_service();
 
-  ListKebunViewModel(BuildContext context){
-    getDetailKebun(context);
-    getDetailDokumen(context);
-    getDetailSertifikat(context);
+  ListKebunViewModel(String kebunId, BuildContext context){
+    getDetailKebun(kebunId, context);
+    getDetailDokumen(kebunId, context);
+    getDetailSertifikat(kebunId, context);
   }
 
-  void getDetailKebun(BuildContext context) async {
-    final response = await _detailApi.getDetailKebun(context);
+  void getDetailKebun(String kebunId, BuildContext context) async {
+    final response = await _detailApi.getDetailKebun(kebunId, context);
     if (response.error == null) {
       if(response.isSuccess == true) {
         getDetail = response.data!;
@@ -40,8 +40,8 @@ class ListKebunViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void getDetailDokumen(BuildContext context) async {
-    final response = await _dokumenApi.getDetailDokumen(context);
+  void getDetailDokumen(String kebunId, BuildContext context) async {
+    final response = await _dokumenApi.getDetailDokumen(kebunId, context);
     if (response.error == null) {
       if(response.isSuccess == true) {
         getDokumen = response.data!;
@@ -55,8 +55,8 @@ class ListKebunViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void getDetailSertifikat(BuildContext context) async {
-    final response = await _sertifikatApi.getDetailSertifikat(context);
+  void getDetailSertifikat(String kebunId, BuildContext context) async {
+    final response = await _sertifikatApi.getDetailSertifikat(kebunId, context);
     if (response.error == null) {
       if(response.isSuccess == true) {
         getSertifikat = response.data!;

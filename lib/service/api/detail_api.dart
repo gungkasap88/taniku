@@ -11,9 +11,9 @@ class DetailApi {
   var client = http.Client();
   var baseUrl = "http://34.126.79.39:81/";
 
-  Future <FindOneKebun> getDetailKebun(BuildContext context) async {
+  Future <FindOneKebun> getDetailKebun(String kebunId, BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/kebun/findOneKebun").replace();
-    var token = 'MjZhYWNiMDE4YzlmYmFmYmIxMjgzNzgyZGFiMTM2NzVlOTQ0MTVkNQ==';
+    var token = 'MzlhZDNjNjlkMGFmOThkOTNjOTVhNDkxMDYzMGQ4ZDIwZjNmZTUyZQ==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ class DetailApi {
     }
     var _body = jsonEncode({
       'user_id' : "85",
-      'kebun_id' : "56"
+      'kebun_id' : kebunId,
 
     });
     print(token);

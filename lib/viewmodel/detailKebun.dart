@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import 'list_kebun_viewmodel.dart';
 
 class detailKebun extends StatefulWidget {
-  const detailKebun({Key? key}) : super(key: key);
+  final String kebunId;
+  const detailKebun({Key? key, required this.kebunId}) : super(key: key);
 
   @override
   State<detailKebun> createState() => _detailKebunState();
@@ -15,7 +16,7 @@ class _detailKebunState extends State<detailKebun> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ListKebunViewModel>(
-        create: (context) => ListKebunViewModel(context),
+        create: (context) => ListKebunViewModel(widget.kebunId, context),
       child: Builder(
         builder: (context) {
           return Consumer<ListKebunViewModel>(

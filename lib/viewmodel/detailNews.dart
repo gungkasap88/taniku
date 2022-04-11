@@ -15,6 +15,10 @@ class _detailNewsState extends State<detailNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Detail News"),
+        backgroundColor: Colors.green,
+      ),
       body: SafeArea(
         child:
         Padding(

@@ -125,137 +125,246 @@ class _homePageState extends State<homePage> {
 
                                 SizedBox(height: 15,),
 
+                                //-------------------- Detail Kebun Petani Card ---------------------
                                 ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: viewModel.getKebun.length,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) =>
-                                                detailKebun(),
-                                            )
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: viewModel.getKebun.length,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context) =>
+                                                  detailKebun(kebunId: viewModel.getKebun[index].id.toString()),
+                                              )
+                                          );
+                                        },
                                         child: Container(
-                                          width: 300,
-                                          padding: EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-                                            borderRadius: BorderRadius.circular(16),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: 10,),
-                                              Text('Kebun Petani',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                ),
-                                              ),
-                                              SizedBox(height: 20,),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                          child: Card(
+                                            clipBehavior: Clip.antiAlias,
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(color: Colors.grey, width: 1),
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
+                                            elevation: 5,
+                                            child: Container(
+                                              child: Column(
                                                 children: [
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text('Luas Kebun',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].luasKebun.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text('Jumlah Pohon',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].jumlahPohon.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text('Tahun Tanam',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].tahunTanamId.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      //SizedBox(height: 10,),
-                                                    ],
+                                                  Container(
+                                                    width: double.maxFinite,
+                                                    padding: EdgeInsets.all(12),
+                                                    decoration: BoxDecoration(color: Colors.green),
+                                                    child: const Text(
+                                                      'Kebun Petani',
+                                                      style: TextStyle(color: Colors.white, fontSize: 16),
+                                                    ),
                                                   ),
-                                                  Column(
-                                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text('Lokasi',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.bold
+                                                  Container(
+                                                    padding: new EdgeInsets.all(20),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Column(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text('Luas Kebun',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].luasKebun.toString(),
+                                                              style: TextStyle(
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5,),
+                                                            Text('Jumlah Pohon',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].jumlahPohon.toString(),
+                                                              style: TextStyle(
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5,),
+                                                            Text('Tahun Tanam',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].tahunTanamId.toString()),
+                                                            //SizedBox(height: 10,),
+                                                          ],
                                                         ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].kelurahanName.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].kecamatanName.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].kabupatenKotaName.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].provinsiName.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5,),
-                                                      Text(viewModel.getKebun[index].kodePos.toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ],
+                                                        Column(
+                                                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text('Lokasi',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].kelurahanName.toString()),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].kecamatanName.toString()),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].kabupatenKotaName.toString()),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].provinsiName.toString()),
+                                                            SizedBox(height: 5,),
+                                                            Text(viewModel.getKebun[index].kodePos.toString()),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   )
                                                 ],
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                      );
+                                    }),
+
+                                //-------------------- List Detail Kebun ---------------------
+
+                                // ListView.builder(
+                                //   shrinkWrap: true,
+                                //   itemCount: viewModel.getKebun.length,
+                                //   physics: const NeverScrollableScrollPhysics(),
+                                //   itemBuilder: (context, index) {
+                                //     return InkWell(
+                                //       onTap: () {
+                                //         Navigator.push(context,
+                                //             MaterialPageRoute(builder: (context) =>
+                                //                 detailKebun(kebunId: viewModel.getKebun[index].id.toString()),
+                                //             )
+                                //         );
+                                //       },
+                                //       child: Padding(
+                                //         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                                //         child: Container(
+                                //           width: 300,
+                                //           padding: EdgeInsets.all(20),
+                                //           decoration: BoxDecoration(
+                                //             color: Colors.deepPurple,
+                                //             borderRadius: BorderRadius.circular(16),
+                                //           ),
+                                //           child: Column(
+                                //             crossAxisAlignment: CrossAxisAlignment.start,
+                                //             children: [
+                                //               SizedBox(height: 10,),
+                                //               Text('Kebun Petani',
+                                //                 style: TextStyle(
+                                //                   color: Colors.white,
+                                //                   fontSize: 20,
+                                //                 ),
+                                //               ),
+                                //               SizedBox(height: 20,),
+                                //               Row(
+                                //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //                 children: [
+                                //                   Column(
+                                //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //                     children: [
+                                //                       Text('Luas Kebun',
+                                //                         style: TextStyle(
+                                //                             color: Colors.white,
+                                //                             fontWeight: FontWeight.bold
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].luasKebun.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text('Jumlah Pohon',
+                                //                         style: TextStyle(
+                                //                             color: Colors.white,
+                                //                             fontWeight: FontWeight.bold
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].jumlahPohon.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text('Tahun Tanam',
+                                //                         style: TextStyle(
+                                //                             color: Colors.white,
+                                //                             fontWeight: FontWeight.bold
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].tahunTanamId.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       //SizedBox(height: 10,),
+                                //                     ],
+                                //                   ),
+                                //                   Column(
+                                //                     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //                     crossAxisAlignment: CrossAxisAlignment.start,
+                                //                     children: [
+                                //                       Text('Lokasi',
+                                //                         style: TextStyle(
+                                //                             color: Colors.white,
+                                //                             fontWeight: FontWeight.bold
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].kelurahanName.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].kecamatanName.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].kabupatenKotaName.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].provinsiName.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                       SizedBox(height: 5,),
+                                //                       Text(viewModel.getKebun[index].kodePos.toString(),
+                                //                         style: TextStyle(
+                                //                           color: Colors.white,
+                                //                         ),
+                                //                       ),
+                                //                     ],
+                                //                   )
+                                //                 ],
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     );
+                                //   },
+                                // ),
 
                                 SizedBox(height: 15,),
 
@@ -300,84 +409,6 @@ class _homePageState extends State<homePage> {
                                 ),
 
                                 SizedBox(height: 20,),
-
-                                // Padding(
-                                //   padding: const EdgeInsets.all(5),
-                                //   child: Container(
-                                //     margin: EdgeInsets.symmetric(horizontal: 10),
-                                //     //padding: EdgeInsets.all(10),
-                                //     child: Stack(
-                                //      children: [
-                                //        Stack(
-                                //          children: [
-                                //            Container(
-                                //              width: 400,
-                                //              height: 300,
-                                //              padding: EdgeInsets.all(20),
-                                //              decoration: BoxDecoration(
-                                //                color: Colors.white60,
-                                //                borderRadius: BorderRadius.circular(16),
-                                //              ),
-                                //            ),
-                                //            SizedBox(height: 30,),
-                                //            ListView.builder(
-                                //                shrinkWrap: true,
-                                //                itemCount: viewModel.getKebun.length,
-                                //                physics: const NeverScrollableScrollPhysics(),
-                                //                itemBuilder: (context, index) {
-                                //                  return InkWell(onTap: (){
-                                //
-                                //                    },
-                                //                    child: Row(
-                                //                      children: [
-                                //                        Column(
-                                //                          children: [
-                                //                            Text("Lokasi", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                                //                          ],
-                                //                        ),
-                                //                        Column(
-                                //                          children: [
-                                //                            Text("Lokasi", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                                //                          ],
-                                //                        )
-                                //                      ],
-                                //                    ),
-                                //                  );
-                                //                }
-                                //                )
-                                //          ],
-                                //        ),
-                                //        Stack(
-                                //          children: [
-                                //            Container(
-                                //              width: 400,
-                                //              height: 50,
-                                //              padding: EdgeInsets.all(20),
-                                //              decoration: BoxDecoration(
-                                //                color: Colors.green[500],
-                                //                borderRadius: BorderRadius.only(
-                                //                  topRight: Radius.circular(16),
-                                //                  topLeft: Radius.circular(16),
-                                //                ),
-                                //              ),
-                                //            ),
-                                //            Padding(
-                                //              padding: const EdgeInsets.all(15.0),
-                                //              child: Text("Kebun Petani",
-                                //                style: TextStyle(
-                                //                  color: Colors.white,
-                                //                  fontSize: 24,
-                                //                ),),
-                                //            )
-                                //          ],
-                                //        )
-                                //      ],
-                                //     ),
-                                //   ),
-                                // ),
-
-                                //vertical
-
                               ],
                             ),
                           ),
