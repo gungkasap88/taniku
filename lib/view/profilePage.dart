@@ -74,7 +74,7 @@ class _profilePageState extends State<profilePage> {
                                       ),
                                       SizedBox(height: 15),
                                       Text(
-                                        viewModel.dataProfile.typeUser.toString(),
+                                        viewModel.dataProfile.nama.toString(),
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,

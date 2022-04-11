@@ -102,7 +102,7 @@ class _loginPageState extends State<loginPage> {
                               String username = usernameController.text.toString();
                               String password = passwordController.text.toString();
                               viewModel.loginview(username, password, context);
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) => register()));
+                              //Navigator.push(context, MaterialPageRoute(builder: (context) => register()));
                             } else  {
                               print ("Lengkapi data");
                               showDialog(context: context, builder: (_) => AlertDialog(

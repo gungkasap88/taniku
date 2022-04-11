@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taniku/view/buttonNav.dart';
+import 'package:taniku/view/homePage.dart';
 import 'package:taniku/view/loginPage.dart';
 import '../model/response_login_model.dart';
 import '../service/api/login_api.dart';
@@ -13,16 +14,18 @@ class LoginViewModel extends ChangeNotifier{
   final _sharedPref = shared_pref_service();
   Data dataLogin = new Data();
 
+  LoginViewModel(BuildContext){
+    _sharedPref.removeSharedPref();
+  }
 
-  LoginViewModel(BuildContext){}
   void loginview(String username, String password, BuildContext context) async{
     final response = await _loginApi.loginview(username, password, context);
     if (response.error == null) {
       if (response.isSuccess = true) {
         dataLogin = response.data!;
-        // _sharedPref.setStringSharedPref("token", dataLogin.token.toString());
-        // _sharedPref.setStringSharedPref("petani_id", dataLogin.detail!.petaniId.toString());
-        // _sharedPref.setStringSharedPref("user_id", dataLogin.userId.toString());
+        _sharedPref.setStringSharedPref("token", dataLogin.token.toString());
+        _sharedPref.setStringSharedPref("petani_id", dataLogin.detail!.petaniId.toString());
+        _sharedPref.setStringSharedPref("user_id", dataLogin.userId.toString());
         print(jsonEncode(dataLogin));
         Navigator.push(context, MaterialPageRoute(builder: (context) => buttonNav()));
       }else {

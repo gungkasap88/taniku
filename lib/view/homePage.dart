@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taniku/viewmodel/detailKebun.dart';
 import 'package:taniku/viewmodel/home_viewmodel.dart';
 
 import '../viewmodel/detailNews.dart';
@@ -22,9 +24,9 @@ class _homePageState extends State<homePage> {
               builder: (context, viewModel, child){
                 return Scaffold(
                     resizeToAvoidBottomInset: false,
-                    appBar: AppBar(
-                      title: Text("List Kebun"),
-                    ),
+                    // appBar: AppBar(
+                    //   title: Text("List Kebun"),
+                    // ),
                     body: SafeArea(
                       //margin: const EdgeInsets.all(16),
                       child: ListView(
@@ -34,14 +36,38 @@ class _homePageState extends State<homePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Container(
+                                  child: TextField(
+                                    style: TextStyle(fontSize: 18),
+                                    decoration: InputDecoration(
+                                        suffixIcon: Icon(Icons.search,
+                                          color: Colors.grey,),
+                                        border: InputBorder.none,
+                                        hintText: "Search News",
+                                        filled: true,
+                                        fillColor: Colors.grey[300]
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 15,),
 
-                                //-------------------- ListView Vertical ---------------------
-                                const Text("News Horizontal", style: TextStyle(fontWeight: FontWeight.bold),),
-                                const SizedBox(height: 16,),
+                                const Text("Good Morning",
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 5,),
+                                const Text("Explore The World with One Click",
+                                  style: TextStyle(
+                                      fontSize: 16,),
+                                ),
+                                SizedBox(height: 10,),
+
+                                //-------------------- ListView Horizontal ---------------------
                                 SizedBox(
-                                    width: double.infinity,
-                                    height: 180,
-                                    child: ListView.builder(
+                                  width: double.infinity,
+                                  height: 180,
+                                  child: ListView.builder(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.horizontal,
                                       itemCount: viewModel.getNews.length,
@@ -59,53 +85,298 @@ class _homePageState extends State<homePage> {
                                             );
                                           },
                                           child: Container(
-                                              width: 300,
-                                              alignment: Alignment.center,
-                                              child: Card(
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  width: double.infinity,
-                                                  margin: const EdgeInsets.all(12),
-                                                  child: Column(
-                                                    children: [
-                                                      Image.network(viewModel.getNews[index].newsImage.toString(), width: 70, height: 70,),
-                                                      const SizedBox(height: 16,),
-                                                      Text(viewModel.getNews[index].newsTitle.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                                      const SizedBox(height: 8,),
-                                                      Text(viewModel.getNews[index].newsDate.toString()),
-                                                    ],
+                                            //width: 300,
+                                            child: Stack(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    child: Image.network(
+                                                      "https://picsum.photos/id/${210 + index}/500/300",
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
-                                              )
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 100,left: 15,right: 10,bottom: 5),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(viewModel.getNews[index].newsTitle.toString(),
+                                                          style: const TextStyle(
+                                                              fontSize: 30,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.white)
+                                                      ),
+                                                      const SizedBox(height: 8,),
+                                                      Text(viewModel.getNews[index].newsDate.toString(),
+                                                          style: const TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.white)
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         );
-                                      },
-                                    )
+                                      }),
                                 ),
+
                                 SizedBox(height: 15,),
-                                const Text("News Vertical", style: TextStyle(fontWeight: FontWeight.bold),),
+
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: viewModel.getKebun.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) =>
+                                                detailKebun(),
+                                            )
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        child: Container(
+                                          width: 300,
+                                          padding: EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            color: Colors.deepPurple,
+                                            borderRadius: BorderRadius.circular(16),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(height: 10,),
+                                              Text('Kebun Petani',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              SizedBox(height: 20,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text('Luas Kebun',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].luasKebun.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text('Jumlah Pohon',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].jumlahPohon.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text('Tahun Tanam',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].tahunTanamId.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      //SizedBox(height: 10,),
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text('Lokasi',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].kelurahanName.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].kecamatanName.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].kabupatenKotaName.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].provinsiName.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5,),
+                                                      Text(viewModel.getKebun[index].kodePos.toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+
+                                SizedBox(height: 15,),
+
+                                //-------------------- ListView Vertical ---------------------
+                                const Text("Hot News", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
                                 const SizedBox(height: 15,),
                                 ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: viewModel.getNews.length,
                                   itemBuilder: (context, index) {
-                                    return Card(
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) =>
+                                                detailNews(
+                                                  newsImage: viewModel.getNews[index].newsImage.toString(),
+                                                  newsTitle: viewModel.getNews[index].newsTitle.toString(),
+                                                  newsDate: viewModel.getNews[index].newsDate.toString(),
+                                                )
+                                            )
+                                        );
+                                      },
                                       child: Container(
-                                        margin: const EdgeInsets.all(8),
-                                        child: Column(
-                                          children: [
-                                            Image.network(viewModel.getNews[index].newsImage.toString(), width: 70, height: 70,),
-                                            const SizedBox(width: 12,),
-                                            Text(viewModel.getNews[index].newsTitle.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                            const SizedBox(height: 8,),
-                                            Text(viewModel.getNews[index].newsDate.toString()),
-                                          ],
+                                        child: Card(
+                                          child: Container(
+                                            margin: const EdgeInsets.all(8),
+                                            child: Column(
+                                              children: [
+                                                Image.network(viewModel.getNews[index].newsImage.toString(), width: 70, height: 70,),
+                                                const SizedBox(width: 12,),
+                                                Text(viewModel.getNews[index].newsTitle.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                const SizedBox(height: 8,),
+                                                Text(viewModel.getNews[index].newsDate.toString()),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     );
                                   },
                                 ),
+
+                                SizedBox(height: 20,),
+
+                                // Padding(
+                                //   padding: const EdgeInsets.all(5),
+                                //   child: Container(
+                                //     margin: EdgeInsets.symmetric(horizontal: 10),
+                                //     //padding: EdgeInsets.all(10),
+                                //     child: Stack(
+                                //      children: [
+                                //        Stack(
+                                //          children: [
+                                //            Container(
+                                //              width: 400,
+                                //              height: 300,
+                                //              padding: EdgeInsets.all(20),
+                                //              decoration: BoxDecoration(
+                                //                color: Colors.white60,
+                                //                borderRadius: BorderRadius.circular(16),
+                                //              ),
+                                //            ),
+                                //            SizedBox(height: 30,),
+                                //            ListView.builder(
+                                //                shrinkWrap: true,
+                                //                itemCount: viewModel.getKebun.length,
+                                //                physics: const NeverScrollableScrollPhysics(),
+                                //                itemBuilder: (context, index) {
+                                //                  return InkWell(onTap: (){
+                                //
+                                //                    },
+                                //                    child: Row(
+                                //                      children: [
+                                //                        Column(
+                                //                          children: [
+                                //                            Text("Lokasi", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                                //                          ],
+                                //                        ),
+                                //                        Column(
+                                //                          children: [
+                                //                            Text("Lokasi", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                                //                          ],
+                                //                        )
+                                //                      ],
+                                //                    ),
+                                //                  );
+                                //                }
+                                //                )
+                                //          ],
+                                //        ),
+                                //        Stack(
+                                //          children: [
+                                //            Container(
+                                //              width: 400,
+                                //              height: 50,
+                                //              padding: EdgeInsets.all(20),
+                                //              decoration: BoxDecoration(
+                                //                color: Colors.green[500],
+                                //                borderRadius: BorderRadius.only(
+                                //                  topRight: Radius.circular(16),
+                                //                  topLeft: Radius.circular(16),
+                                //                ),
+                                //              ),
+                                //            ),
+                                //            Padding(
+                                //              padding: const EdgeInsets.all(15.0),
+                                //              child: Text("Kebun Petani",
+                                //                style: TextStyle(
+                                //                  color: Colors.white,
+                                //                  fontSize: 24,
+                                //                ),),
+                                //            )
+                                //          ],
+                                //        )
+                                //      ],
+                                //     ),
+                                //   ),
+                                // ),
+
+                                //vertical
 
                               ],
                             ),
