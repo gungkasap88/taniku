@@ -13,7 +13,7 @@ class DokumenApi {
 
   Future <KebunSertifikat> getDetailDokumen(String kebunId, BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/kebun/getKebunSertifikat").replace();
-    var token = 'MzlhZDNjNjlkMGFmOThkOTNjOTVhNDkxMDYzMGQ4ZDIwZjNmZTUyZQ==';
+    var token = 'ZmVhNWE3ZmM0YjQ2ZDFiZmQxMDBiMWMyYWU3ZDU3NjY3MWRhZDBlNQ==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',

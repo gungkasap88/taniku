@@ -15,6 +15,8 @@ class _buttonNavState extends State<buttonNav> {
   final List<Widget> body = [
     homePage(),
     profilePage(),
+    homePage(),
+    profilePage(),
   ];
 
   @override
@@ -28,11 +30,19 @@ class _buttonNavState extends State<buttonNav> {
         onTap: ontap,
         items: [
           BottomNavigationBarItem(
-            label: "",
+            label: "Home",
             icon: Icon(Icons.home_outlined, color: Colors.black,),
           ),
           BottomNavigationBarItem(
-            label: "",
+            label: "Transaksi",
+            icon: Icon(Icons.account_balance_wallet_rounded, color: Colors.black,),
+          ),
+          BottomNavigationBarItem(
+            label: "Pengiriman",
+            icon: Icon(Icons.delivery_dining_rounded, color: Colors.black,),
+          ),
+          BottomNavigationBarItem(
+            label: "Profil",
             icon: Icon(Icons.person, color: Colors.black,),
           ),
         ],
