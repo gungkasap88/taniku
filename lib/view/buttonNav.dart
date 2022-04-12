@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taniku/view/homePage.dart';
+import 'package:taniku/view/pengirimanPage.dart';
 import 'package:taniku/view/profilePage.dart';
+import 'package:taniku/view/transaksiPage.dart';
 
 class buttonNav extends StatefulWidget {
   const buttonNav({Key? key}) : super(key: key);
@@ -14,8 +16,8 @@ class _buttonNavState extends State<buttonNav> {
   int currentIndex = 0;
   final List<Widget> body = [
     homePage(),
-    profilePage(),
-    homePage(),
+    TransaksiPage(),
+    PengirimanPage(),
     profilePage(),
   ];
 
