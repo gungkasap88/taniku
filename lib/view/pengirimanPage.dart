@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../viewmodel/penggiriman_viewmodel.dart';
 
@@ -123,7 +124,32 @@ class _PengirimanPageState extends State<PengirimanPage> {
                                                     Visibility(
                                                         visible: _status == 1 ? true : false,
                                                       child: ElevatedButton.icon(
-                                                          onPressed: (){},
+                                                          onPressed: (){
+                                                            showDialog(context: context, builder: (_) => AlertDialog(
+                                                              title: Text('QR Code\n' + 'Nomor Reservasi'),
+                                                              content: Container(
+                                                                width: 200,
+                                                                height: 200,
+                                                                child: Center(
+                                                                  child: QrImage(
+                                                                    version: 6,
+                                                                    backgroundColor: Colors.grey.shade200,
+                                                                    foregroundColor: Colors.black,
+                                                                    errorCorrectionLevel: QrErrorCorrectLevel.M,
+                                                                    padding: EdgeInsets.all(10),
+                                                                    data: viewModel.getPengiriman[index].noReservasi.toString(),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              actions: [
+                                                                TextButton(onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                  child: Text("Oke")
+                                                                  ,)
+                                                              ],
+                                                            ));
+                                                          },
                                                           icon: Icon(Icons.wifi_tethering),
                                                           label: Text("")),
                                                     ),
