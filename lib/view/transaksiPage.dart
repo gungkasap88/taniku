@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taniku/view/persediaan_page.dart';
 import 'package:taniku/viewmodel/transaksi_viewmodel.dart';
 import 'package:intl/intl.dart';
 
@@ -119,7 +120,10 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                                         ),
                                                         onPressed:() {
-
+                                                          Navigator.push(
+                                                              context, MaterialPageRoute(
+                                                              builder: (context) => PersediaanPage(
+                                                                transaksi: viewModel.getTransaksi[index])));
                                                         },
                                                       )
                                                     ],

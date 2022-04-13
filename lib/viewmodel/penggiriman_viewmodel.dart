@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../model/response_pengiriman.dart';
 import '../service/api/pengiriman_api.dart';
+import '../view/pengirimanPage.dart';
 
 class PengirimanViewModel extends ChangeNotifier{
   final _pengirimanApi = PengirimanApi();
@@ -16,6 +18,7 @@ class PengirimanViewModel extends ChangeNotifier{
     final response = await _pengirimanApi.getDataPengiriman(context);
     if (response.error == null) {
       if(response.isSuccess == true) {
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => PengirimanPage()));
         getPengiriman = response.data!;
         print(jsonEncode(getPengiriman));
       } else {
