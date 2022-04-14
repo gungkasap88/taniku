@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:taniku/model/response_pengiriman.dart';
+import 'package:taniku/service/api/token.dart';
 
 class PengirimanApi {
   var client = http.Client();
@@ -12,7 +13,6 @@ class PengirimanApi {
 
   Future <ResponsePengiriman> getDataPengiriman(BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/reservasi/getAll").replace();
-    var token = 'N2IyN2I0N2ZmZGU3MmE4NjgxNDhjZGZlNTA4ZGFhZTY0Zjc4YmI0Yw==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',
@@ -43,4 +43,5 @@ class PengirimanApi {
     } on TimeoutException catch (_) {
       return ResponsePengiriman.withError("waktu habis, silahkan coba kembali");
     }
-  }}
+  }
+}

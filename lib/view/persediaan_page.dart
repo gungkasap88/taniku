@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:taniku/model/response_transaksi.dart';
+import 'package:taniku/view/pengirimanPage.dart';
 import 'package:taniku/view/transaksiPage.dart';
-import 'package:taniku/viewmodel/penggiriman_viewmodel.dart';
+import 'package:taniku/viewmodel/persediaan_viewmodel.dart';
 
 class PersediaanPage extends StatefulWidget {
   final Data transaksi;
@@ -17,9 +18,12 @@ class PersediaanPage extends StatefulWidget {
 
 class _PersediaanPageState extends State<PersediaanPage> {
   final _formkey = GlobalKey<FormState>();
-  final pabrikController = TextEditingController();
-  final tonasiController = TextEditingController();
-  final _textEditingController = TextEditingController();
+  final pabrikC = TextEditingController();
+  final tonasiC = TextEditingController();
+  var dateC = TextEditingController();
+  var timeC = TextEditingController();
+  var dateTime;
+  var tgl;
 
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
@@ -36,6 +40,8 @@ class _PersediaanPageState extends State<PersediaanPage> {
     if (selected != null && selected != selectedDate) {
       setState(() {
         selectedDate = selected;
+        tgl = DateFormat('yyyy-MM-dd').format(selectedDate);
+        dateC.text = DateFormat.yMd().format(selectedDate);
       });
     }
     return selectedDate;
@@ -49,6 +55,10 @@ class _PersediaanPageState extends State<PersediaanPage> {
     if (selected != null && selected != selectedTime) {
       setState(() {
         selectedTime = selected;
+        var hour = selectedTime.hour.toString();
+        var minute = selectedTime.minute.toString();
+        dateTime = " " + hour + ":" + minute + ":00 ";
+        timeC.text = dateTime;
       });
     }
     return selectedTime;
@@ -59,7 +69,7 @@ class _PersediaanPageState extends State<PersediaanPage> {
     if (selectedDate == null) {
       return 'select date';
     } else {
-      return DateFormat('dd MMM yyyy').format(selectedDate);
+      return DateFormat('yyyy-MM-dd').format(selectedDate);
     }
   }
 
@@ -73,18 +83,17 @@ class _PersediaanPageState extends State<PersediaanPage> {
   
   @override
   void initState() {
-    pabrikController.text = widget.transaksi.namaPabrik.toString();
-    tonasiController.text = widget.transaksi.kapasitas.toString();
+    pabrikC.text = widget.transaksi.namaPabrik.toString();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PengirimanViewModel>(
-        create: (context) => PengirimanViewModel(context),
+    return ChangeNotifierProvider<PersediaanViewModel>(
+        create: (context) => PersediaanViewModel(context),
       child: Builder(
         builder: (context) {
-          return Consumer<PengirimanViewModel>(
+          return Consumer<PersediaanViewModel>(
               builder: (context, viewModel, child) {
                 return Scaffold(
                   resizeToAvoidBottomInset: false,
@@ -120,7 +129,7 @@ class _PersediaanPageState extends State<PersediaanPage> {
                                           ),
                                           SizedBox(height: 7,),
                                           TextField(
-                                            controller: pabrikController,
+                                            controller: pabrikC,
                                             style:
                                             new TextStyle(fontSize: 16.0,),
                                             decoration: new InputDecoration(
@@ -154,7 +163,7 @@ class _PersediaanPageState extends State<PersediaanPage> {
                                                     ),
                                                     SizedBox(height: 7,),
                                                     TextField(
-                                                      controller: _textEditingController,
+                                                      controller: dateC,
                                                       onTap: () {
                                                         _selectDate(context);
                                                         showDate = true;
@@ -189,9 +198,9 @@ class _PersediaanPageState extends State<PersediaanPage> {
                                                           fontWeight: FontWeight.w500
                                                       ),
                                                     ),
-                                                    SizedBox(height: 7,),
+                                                    SizedBox(height: 15),
                                                     TextField(
-                                                      controller: _textEditingController,
+                                                      controller: timeC,
                                                       onTap: () {
                                                         _selectTime(context);
                                                         showTime = true;
@@ -226,7 +235,7 @@ class _PersediaanPageState extends State<PersediaanPage> {
                                           ),
                                           SizedBox(height: 10,),
                                           TextField(
-                                            controller: tonasiController,
+                                            controller: tonasiC,
                                             style:
                                             new TextStyle(fontSize: 16.0,),
                                             decoration: new InputDecoration(
@@ -270,27 +279,31 @@ class _PersediaanPageState extends State<PersediaanPage> {
                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                                 ),
                                                 onPressed:() async {
-                                                  if (_formkey.currentState!.validate()){
-                                                    String pabrik = pabrikController.text.toString();
-                                                    String tonasi = tonasiController.text.toString();
-                                                    String tanggal= _textEditingController.text.toString();
-                                                    viewModel.getDataPengiriman(context);
-
-                                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => login()));
-                                                  } else  {
-                                                    print ("Lengkapi data");
-                                                    showDialog(context: context, builder: (_) => AlertDialog(
-                                                      title: Text('Informasi'),
-                                                      content: Text('Silahkan lengkapi data diri anda'),
-                                                      actions: [
-                                                        TextButton(onPressed: () {
-                                                          Navigator.pop(context);
-                                                        },
-                                                          child: Text("OKEY")
-                                                          ,)
-                                                      ],
-                                                    ));
-                                                  }
+                                                  var dateTanggal = tgl + " " + timeC.text;
+                                                  print(widget.transaksi.id.toString() + " " +
+                                                    dateTanggal.toString() +
+                                                    tonasiC.text.toString());
+                                                  viewModel.getDataPersediaan(
+                                                      widget.transaksi.id.toString(),
+                                                      dateTanggal.toString(),
+                                                      tonasiC.text.toString(),
+                                                      );
+                                                  showDialog(context: context, builder: (_) => AlertDialog(
+                                                    title: Text('Success'),
+                                                    content: Text('Data Berhasail Ditambahkan'),
+                                                    actions: [
+                                                      TextButton(onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) => PengirimanPage()
+                                                            )
+                                                        );
+                                                      },
+                                                        child: Text("Oke")
+                                                        ,)
+                                                    ],
+                                                  ));
                                                 },
                                               )
                                             ],

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:taniku/model/response_transaksi.dart';
+import 'package:taniku/service/api/token.dart';
 
 class TransaksiApi {
   var client = http.Client();
@@ -12,7 +13,6 @@ class TransaksiApi {
 
   Future <ResponseTransaksi> getDataTransaksi(BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/pabrik/getPabrik").replace();
-    var token = 'N2IyN2I0N2ZmZGU3MmE4NjgxNDhjZGZlNTA4ZGFhZTY0Zjc4YmI0Yw==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',

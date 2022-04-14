@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:taniku/service/api/token.dart';
 
 import '../../model/response_find_one_kebun.dart';
 
@@ -13,7 +14,6 @@ class DetailApi {
 
   Future <FindOneKebun> getDetailKebun(String kebunId, BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/kebun/findOneKebun").replace();
-    var token = 'N2IyN2I0N2ZmZGU3MmE4NjgxNDhjZGZlNTA4ZGFhZTY0Zjc4YmI0Yw==';
     Map<String, String> headersToken() {
       return{
         'Content-Type': 'application/json',

@@ -5,14 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:taniku/model/response_persediaan_stok.dart';
+import 'package:taniku/service/api/token.dart';
 
 class PersediaanApi {
   var client = http.Client();
   var baseUrl = "http://34.126.79.39:81/";
 
-  Future <ResponsePersediaanStok> getDataPersediaan(BuildContext context) async {
+  Future <ResponsePersediaanStok> getDataPersediaan(
+      String pabrikId, String tglKirim, String tonasi) async {
     var uri = Uri.parse(baseUrl + "api/niaga/reservasi/add").replace();
-    var token = 'N2IyN2I0N2ZmZGU3MmE4NjgxNDhjZGZlNTA4ZGFhZTY0Zjc4YmI0Yw==';
     Map<String, String> headersToken() {
       return {
         'Content-Type': 'application/json',
@@ -23,10 +24,10 @@ class PersediaanApi {
 
     var _body = jsonEncode({
       'koperasi_id': "",
-      'pabrik_id': "8",
+      'pabrik_id': "$pabrikId",
       'petani_id': "46",
-      'tanggal_pengiriman': "2022-03-16 17:46:00",
-      'tonasi': "1000",
+      'tanggal_pengiriman': "$tglKirim",
+      'tonasi': "$tonasi",
       'user_id': "85"
     });
 

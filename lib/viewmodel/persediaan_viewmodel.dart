@@ -9,8 +9,10 @@ class PersediaanViewModel extends ChangeNotifier {
   PersediaanViewModel(BuildContext context){
   }
 
-  void getDataPersediaan(BuildContext context) async {
-    final response = await _persediaanApi.getDataPersediaan(context);
+  void getDataPersediaan(
+      String pabrikId, String tglKirim, String tonasi
+      ) async {
+    final response = await _persediaanApi.getDataPersediaan(pabrikId, tglKirim, tonasi);
     if (response.error == null) {
       if(response.isSuccess == true) {
         print(response.message.toString());
