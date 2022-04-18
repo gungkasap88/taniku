@@ -96,6 +96,7 @@ class _buttonNavState extends State<buttonNav> {
                 _selectedIndex = index;
               });
             },
+            //bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
           ),
         ),
       )

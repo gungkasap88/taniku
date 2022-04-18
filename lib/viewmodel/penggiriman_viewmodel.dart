@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:taniku/service/api/jadwalulang_api.dart';
 import '../model/response_pengiriman.dart';
 import '../service/api/pengiriman_api.dart';
 import '../view/pengirimanPage.dart';
@@ -29,4 +30,20 @@ class PengirimanViewModel extends ChangeNotifier{
     }
     notifyListeners();
   }
+
+  void getDataJadwalUlang(String tanggalKirim, String noRev) async {
+    final response = await _pengirimanApi.getDataJadwalUlang(tanggalKirim, noRev);
+    if (response.error == null) {
+      if(response.isSuccess == true) {
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => PengirimanPage()));
+        print(jsonEncode(getPengiriman));
+      } else {
+        print(response.message.toString());
+      }
+    } else {
+      print(response.error.toString());
+    }
+    notifyListeners();
+  }
+
 }

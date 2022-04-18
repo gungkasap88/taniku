@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:taniku/model/response_transaksi.dart';
-import 'package:taniku/view/pengirimanPage.dart';
-import 'package:taniku/view/transaksiPage.dart';
 import 'package:taniku/viewmodel/persediaan_viewmodel.dart';
 
 class PersediaanPage extends StatefulWidget {
@@ -293,12 +291,7 @@ class _PersediaanPageState extends State<PersediaanPage> {
                                                     content: Text('Data Berhasail Ditambahkan'),
                                                     actions: [
                                                       TextButton(onPressed: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) => PengirimanPage()
-                                                            )
-                                                        );
+                                                        Navigator.pop(context);
                                                       },
                                                         child: Text("Oke")
                                                         ,)

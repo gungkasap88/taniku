@@ -68,11 +68,11 @@ class _TransaksiPageState extends State<TransaksiPage> {
                                                     mainAxisAlignment: MainAxisAlignment.start,
                                                     children: [
                                                       CircleAvatar(
-                                                        radius: 40,
+                                                        radius: 30,
                                                         backgroundColor: Colors.grey[100],
                                                         child: Icon(Icons.account_balance),
                                                       ),
-                                                      SizedBox(width: 15,),
+                                                      SizedBox(width: 5,),
                                                       Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
