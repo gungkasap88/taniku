@@ -1,7 +1,7 @@
 class ResponseProfile {
   bool? isSuccess;
   String? message;
-  Data? data;
+  Data2? data;
   String? error;
 
   ResponseProfile({
@@ -14,7 +14,7 @@ class ResponseProfile {
   ResponseProfile.fromJson(Map<String, dynamic> json) {
     isSuccess = json['isSuccess'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data2.fromJson(json['data']) : null;
   }
 
   factory ResponseProfile.withError(String error) => ResponseProfile(error: error);
@@ -30,7 +30,7 @@ class ResponseProfile {
   }
 }
 
-class Data {
+class Data2 {
   String? nama;
   Null? foto;
   String? mobile;
@@ -96,7 +96,7 @@ class Data {
   Null? updatedDate;
   Null? systemTime;
 
-  Data(
+  Data2(
       {this.nama,
         this.foto,
         this.mobile,
@@ -162,7 +162,7 @@ class Data {
         this.updatedDate,
         this.systemTime});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Data2.fromJson(Map<String, dynamic> json) {
     nama = json['nama'];
     foto = json['foto'];
     mobile = json['mobile'];

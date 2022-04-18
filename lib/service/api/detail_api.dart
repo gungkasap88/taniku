@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:taniku/service/api/token.dart';
 
 import '../../model/response_find_one_kebun.dart';
+import '../local/shared_pref_service.dart';
 
 class DetailApi {
   var client = http.Client();
@@ -14,23 +15,25 @@ class DetailApi {
 
   Future <FindOneKebun> getDetailKebun(String kebunId, BuildContext context) async {
     var uri = Uri.parse(baseUrl + "api/niaga/kebun/findOneKebun").replace();
-    Map<String, String> headersToken() {
+    final tokenLocal = await shared_pref_service().getStringSharedPref("token");
+    final userId = await shared_pref_service().getStringSharedPref("user_id");
+    Map<String, String> headersToken(tokenLocal) {
       return{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token'
+        'Authorization': 'Bearer $tokenLocal'
       };
     }
     var _body = jsonEncode({
-      'user_id' : "85",
+      'user_id' : userId,
       'kebun_id' : kebunId,
 
     });
-    print(token);
+    print(tokenLocal);
     print(_body);
     try{
       final response = await client
-          .post(uri, headers: headersToken(), body: _body)
+          .post(uri, headers: headersToken(tokenLocal), body: _body)
           .timeout(const Duration(seconds: 30));
       print(response.body);
       if (response.statusCode == HttpStatus.ok) {

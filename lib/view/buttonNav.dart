@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taniku/view/homePage.dart';
 import 'package:taniku/view/pengirimanPage.dart';
+import 'package:taniku/view/profil_screen.dart';
 import 'package:taniku/view/profilePage.dart';
 import 'package:taniku/view/transaksiPage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -19,7 +20,7 @@ class _buttonNavState extends State<buttonNav> {
       homePage(),
       TransaksiPage(),
       PengirimanPage(),
-      profilePage(),
+      Profil_Screen(),
   ];
 
   // int currentIndex = 0;
