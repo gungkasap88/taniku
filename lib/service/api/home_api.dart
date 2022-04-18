@@ -17,11 +17,11 @@ class HomeApi {
     final tokenLocal = await shared_pref_service().getStringSharedPref("token");
     final petaniIdLocal = await shared_pref_service().getStringSharedPref("petani_id");
     final userIdLocal = await shared_pref_service().getStringSharedPref("user_id");
-    Map<String, String> headersToken(String token) {
+    Map<String, String> headersToken(String tokenLocal) {
       return {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token'
+        'Authorization': 'Bearer $tokenLocal'
       };
     }
     var _body = jsonEncode({
