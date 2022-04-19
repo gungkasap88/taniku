@@ -157,7 +157,7 @@ class _profilePageState extends State<profilePage> {
                                         onSurface: Colors.grey,
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                       ),
-                                      onPressed:() {},
+                                      onPressed:() { },
                                     )
                                   ],
                                 ),

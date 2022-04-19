@@ -84,9 +84,12 @@ class _PengirimanPageState extends State<PengirimanPage> {
   List<Data> Pengiriman = [];
 
   // void refreshData(){
-  //    Pengiriman.clear();
+  // //    Pengiriman.clear();
+  //   onRefresh: () async {
+  //     viewModel.getPengiriman(context);
+  //   };
   // }
-  
+
   @override
   void initState() {
     super.initState();
@@ -208,12 +211,21 @@ class _PengirimanPageState extends State<PengirimanPage> {
                                                         child: ElevatedButton.icon(
                                                             onPressed: (){
                                                               showDialog(context: context, builder: (_) => AlertDialog(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                                                                 titlePadding: EdgeInsets.all(0.0),
                                                                 title: Container(
                                                                     //width: double.maxFinite,
                                                                     padding: EdgeInsets.all(10.0),
-                                                                    decoration: BoxDecoration(color: Colors.green),
-                                                                    child: Text('QR Code\n' + viewModel.getPengiriman[index].noReservasi.toString())),
+                                                                    decoration: BoxDecoration(
+                                                                      color: Colors.green,
+                                                                      borderRadius: BorderRadius.only(
+                                                                          topLeft: Radius.circular(20.0),
+                                                                          topRight: Radius.circular(20.0)),
+                                                                    ),
+                                                                    child: Text(
+                                                                        'QR Code\n' + viewModel.getPengiriman[index].noReservasi.toString(),
+                                                                      style: TextStyle(color: Colors.white))),
                                                                 content: Container(
                                                                   width: 200,
                                                                   height: 200,
