@@ -33,8 +33,8 @@ class TambahKebunViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void getDetailKota(String provinsiId, BuildContext context) async {
-    final response = await _detailAlamat.getKota(provinsiId, context);
+  void getDetailKota(String provinsiId) async {
+    final response = await _detailAlamat.getKota(provinsiId);
     if (response.error == null) {
       if(response.isSuccess == true) {
         getKota = response.data!;
@@ -48,8 +48,8 @@ class TambahKebunViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void getDetailKecamatan(String kotaId, BuildContext context) async {
-    final response = await _detailAlamat.getKecamatan(kotaId, context);
+  void getDetailKecamatan(String kotaId) async {
+    final response = await _detailAlamat.getKecamatan(kotaId);
     if (response.error == null) {
       if(response.isSuccess == true) {
         getKecamatan = response.data!;
@@ -63,8 +63,8 @@ class TambahKebunViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void getDetailKelurahan(String kecamatanId, BuildContext context) async {
-    final response = await _detailAlamat.getKelurahan(kecamatanId, context);
+  void getDetailKelurahan(String kecamatanId) async {
+    final response = await _detailAlamat.getKelurahan(kecamatanId);
     if (response.error == null) {
       if(response.isSuccess == true) {
         getKelurahan = response.data!;

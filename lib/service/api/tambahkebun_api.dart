@@ -46,7 +46,7 @@ class TambahKebunApi {
     }
   }
 
-  Future <ResponseKota> getKota(String provinsiId, BuildContext context) async {
+  Future <ResponseKota> getKota(String provinsiId) async {
     var uri = Uri.parse(baseUrl + "api/niaga/wilayah/kabupatenKota").replace();
     final tokenLocal = await shared_pref_service().getStringSharedPref("token");
     Map<String, String> headersToken(tokenLokal) {
@@ -78,7 +78,7 @@ class TambahKebunApi {
     }
   }
 
-  Future <ResponseKecamatan> getKecamatan(String kotaId, BuildContext context) async {
+  Future <ResponseKecamatan> getKecamatan(String kotaId) async {
     var uri = Uri.parse(baseUrl + "api/niaga/wilayah/kecamatan").replace();
     final tokenLocal = await shared_pref_service().getStringSharedPref("token");
     Map<String, String> headersToken(tokenLokal) {
@@ -110,7 +110,7 @@ class TambahKebunApi {
     }
   }
 
-  Future <ResponseKelurahan> getKelurahan(String kecamatanId, BuildContext context) async {
+  Future <ResponseKelurahan> getKelurahan(String kecamatanId) async {
     var uri = Uri.parse(baseUrl + "api/niaga/wilayah/kelurahanDesa").replace();
     final tokenLocal = await shared_pref_service().getStringSharedPref("token");
     Map<String, String> headersToken(tokenLokal) {
