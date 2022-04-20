@@ -210,11 +210,10 @@ class _PengirimanPageState extends State<PengirimanPage> {
                                                           visible: _status == 1 ? true : false,
                                                         child: ElevatedButton.icon(
                                                             onPressed: (){
-                                                              showDialog(context: context, builder: (_) => AlertDialog(
+                                                              showDialog(context: context, builder: (_) =>
+                                                                  AlertDialog(
                                                                 shape: RoundedRectangleBorder(
-                                                                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                                                                titlePadding: EdgeInsets.all(0.0),
-                                                                title: Container(
+                                                                    borderRadius: BorderRadius.all(Radius.circular(20.0))), titlePadding: EdgeInsets.all(0.0), title: Container(
                                                                     //width: double.maxFinite,
                                                                     padding: EdgeInsets.all(10.0),
                                                                     decoration: BoxDecoration(

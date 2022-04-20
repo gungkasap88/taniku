@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:taniku/view/dokumenPage.dart';
+import 'package:taniku/view/kebunPage.dart';
+import 'package:taniku/view/sertifikasiPage.dart';
 import 'package:taniku/view/tambahKebun.dart';
 
 class TambahKebunPage extends StatefulWidget {
@@ -36,13 +39,9 @@ class _TambahKebunPageState extends State<TambahKebunPage> {
           body: TabBarView(
             children: [
               TambahKebun(),
-              Center(
-                child: Text("Baaaaaka"),
-              ),
-              TambahKebun(),
-              Center(
-                child: Text("Sertifikasi"),
-              ),
+              KebunPage(),
+              DokumenPage(),
+              SertifikasiPage()
             ],
           ),
         )

@@ -42,6 +42,12 @@ dependencies:
   google_nav_bar: ^5.0.6
   pull_to_refresh: ^2.0.0
   dropdown_search: ^2.0.1
+  firebase_core: ^1.14.1
+  firebase_messaging: ^11.2.12
+  flutter_local_notifications: ^9.4.0
+  image_picker: ^0.8.3
+
+
 
 dev_dependencies:
   flutter_test:

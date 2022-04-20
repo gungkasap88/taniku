@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "606362983437",
+    "project_id": "fcm-project-bccf9",
+    "storage_bucket": "fcm-project-bccf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606362983437:android:244d2980cc8ee554370944",
+        "android_client_info": {
+          "package_name": "com.example.taniku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606362983437-bogjbff7r6e6qe1t73a2quffcph5ncmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.taniku",
+            "certificate_hash": "eeafa1c7498a7c96ced439b4c7af9a570acd1751"
+          }
+        },
+        {
+          "client_id": "606362983437-megmqluh8e35m889merktokv1q40dab3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD30dI7TwTWVheW-_yR_IdF9WE_Nis_5pY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606362983437-megmqluh8e35m889merktokv1q40dab3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

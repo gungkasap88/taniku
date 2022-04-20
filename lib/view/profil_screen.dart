@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taniku/view/coba_screen.dart';
+import 'package:taniku/view/image_picker.dart';
 import 'package:taniku/view/tambahKebun.dart';
+import 'package:taniku/view/tambahkebunPage.dart';
 import 'package:taniku/viewmodel/detailKebun.dart';
 import 'package:taniku/viewmodel/home_viewmodel.dart';
 import 'package:taniku/viewmodel/profil_viewmodel.dart';
@@ -32,7 +35,7 @@ class _Profil_ScreenState extends State<Profil_Screen> {
                           onPressed: () {},
                           icon: Icon(
                             Icons.more_horiz,
-                            color: Color(0xFF22215B),
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -71,7 +74,13 @@ class _Profil_ScreenState extends State<Profil_Screen> {
                                         minimumSize: Size(70,50),
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                       ),
-                                      onPressed:() {},
+                                      onPressed:() {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) =>
+                                                ImagePickerPage(title: '',),
+                                            )
+                                        );
+                                      },
                                     )
                                   ],
                                 ),
@@ -96,7 +105,7 @@ class _Profil_ScreenState extends State<Profil_Screen> {
                                       onPressed:() {
                                         Navigator.push(context,
                                             MaterialPageRoute(builder: (context) =>
-                                                TambahKebun(),
+                                                TambahKebunPage(),
                                             )
                                         );
                                       },
