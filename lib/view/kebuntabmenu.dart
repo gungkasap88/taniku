@@ -1,4 +1,3 @@
-//import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -7,18 +6,17 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:taniku/model/response_tipe_lahan.dart';
 
-class KebunPage extends StatefulWidget {
-  const KebunPage({Key? key,}) : super(key: key);
+import '../model/response_tipe_lahan.dart';
+
+class KebunTabMenu extends StatefulWidget {
+  const KebunTabMenu({Key? key}) : super(key: key);
 
   @override
-  State<KebunPage> createState() => _KebunPageState();
+  State<KebunTabMenu> createState() => _KebunTabMenuState();
 }
 
-class _KebunPageState extends State<KebunPage> {
-
+class _KebunTabMenuState extends State<KebunTabMenu> {
   TextEditingController luaskebunC = TextEditingController();
   TextEditingController tipelahanC = TextEditingController();
   TextEditingController jumlahpohonC = TextEditingController();
@@ -30,7 +28,7 @@ class _KebunPageState extends State<KebunPage> {
 
   File? image;
 
-  //note: ini dari API Horizontal
+  //note: ini dari API Dropdown Tipe Lahan
   List<DataTipe> dataTipeLahan = [];
   final String apiUrlH = "http://34.126.79.39:81/api/niaga/listStatusLahan";
 
@@ -144,6 +142,38 @@ class _KebunPageState extends State<KebunPage> {
                               ],
                             ),
                             SizedBox(height: 10,),
+                            // DropdownButtonFormField(
+                            //   style: TextStyle(
+                            //     fontSize: 14,
+                            //     color: Colors.black
+                            //   ),
+                            //   decoration: new InputDecoration(
+                            //     contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                            //     border: OutlineInputBorder(
+                            //       borderSide: new BorderSide(color: Colors.black),
+                            //       borderRadius: new BorderRadius.circular(25),
+                            //     ),
+                            //     focusedBorder: OutlineInputBorder(
+                            //       borderSide: new BorderSide(color: Colors.black),
+                            //       borderRadius: new BorderRadius.circular(25.7),
+                            //     ),
+                            //   ),
+                            //   isExpanded: true,
+                            //   value: dropdownTipe,
+                            //   onChanged: (String? newValue) {
+                            //     setState(() {
+                            //       dropdownTipe = newValue!;
+                            //     });
+                            //   },
+                            //   items: <String>["Lahan Sendiri", "Sendiri", "Lahari", "Sendi"]
+                            //       .map<DropdownMenuItem<String>>((String value) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: value,
+                            //       child: Text(value),
+                            //     );
+                            //   }).toList(),
+                            // ),
+
                             DropdownButtonFormField(
                               decoration: new InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
@@ -211,6 +241,34 @@ class _KebunPageState extends State<KebunPage> {
                               ],
                             ),
                             SizedBox(height: 10,),
+                            // DropdownButtonFormField(
+                            //   decoration: new InputDecoration(
+                            //     contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                            //     border: OutlineInputBorder(
+                            //       borderSide: new BorderSide(color: Colors.black),
+                            //       borderRadius: new BorderRadius.circular(25),
+                            //     ),
+                            //     focusedBorder: OutlineInputBorder(
+                            //       borderSide: new BorderSide(color: Colors.black),
+                            //       borderRadius: new BorderRadius.circular(25.7),
+                            //     ),
+                            //   ),
+                            //   isExpanded: true,
+                            //   value: dropdownJenis,
+                            //   onChanged: (String? newValue) {
+                            //     setState(() {
+                            //       dropdownJenis = newValue!;
+                            //     });
+                            //   },
+                            //   items: <String>["Lonsum", "Nosul", "Sulom", "Mosul"]
+                            //       .map<DropdownMenuItem<String>>((String value) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: value,
+                            //       child: Text(value),
+                            //     );
+                            //   }).toList(),
+                            // ),
+
                             DropdownButtonFormField(
                               decoration: new InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
@@ -311,8 +369,7 @@ class _KebunPageState extends State<KebunPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      image != null ? Image.file(image!, width: 100, height: 100,): Text("No image selected"),
-                      //Icon(Icons.image_outlined, size: 125,),
+                      Icon(Icons.image_outlined, size: 125,),
                       SizedBox(width: 50,),
                       ElevatedButton(
                         child: Text("Unggah", style: TextStyle(color: Colors.orange, fontSize: 18)),

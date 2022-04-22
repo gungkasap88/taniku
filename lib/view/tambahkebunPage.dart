@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:taniku/view/dokumenPage.dart';
+import 'package:taniku/view/dokumentabmenu.dart';
 import 'package:taniku/view/kebunPage.dart';
+import 'package:taniku/view/kebuntabmenu.dart';
 import 'package:taniku/view/sertifikasiPage.dart';
 import 'package:taniku/view/tambahKebun.dart';
+import 'db.dart';
 
 class TambahKebunPage extends StatefulWidget {
   const TambahKebunPage({Key? key}) : super(key: key);
@@ -12,6 +14,24 @@ class TambahKebunPage extends StatefulWidget {
 }
 
 class _TambahKebunPageState extends State<TambahKebunPage> {
+
+  List<Map> listData = [];
+  MyDb myDatabase = MyDb();
+
+  void getData(){
+    Future.delayed(const Duration(milliseconds: 500),() async {
+      listData = await myDatabase.db.rawQuery('SELECT * FROM users');
+      setState(() { });
+    });
+  }
+
+  @override
+  void initState() {
+    myDatabase.open();
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -39,8 +59,8 @@ class _TambahKebunPageState extends State<TambahKebunPage> {
           body: TabBarView(
             children: [
               TambahKebun(),
-              KebunPage(),
-              DokumenPage(),
+              KebunTabMenu(),
+              DokumenTabMenu(),
               SertifikasiPage()
             ],
           ),

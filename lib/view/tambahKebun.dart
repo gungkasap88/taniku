@@ -2,9 +2,6 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taniku/model/response_kelurahan.dart';
-import 'package:taniku/view/pengirimanPage.dart';
-import 'package:taniku/view/profil_screen.dart';
-import 'package:taniku/view/transaksiPage.dart';
 
 import '../model/response_kecamatan.dart';
 import '../model/response_kota.dart';
