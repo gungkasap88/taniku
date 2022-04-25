@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taniku/view/dokumentabmenu.dart';
 import 'package:taniku/view/kebunPage.dart';
 import 'package:taniku/view/kebuntabmenu.dart';
 import 'package:taniku/view/sertifikasiPage.dart';
 import 'package:taniku/view/tambahKebun.dart';
+import '../viewmodel/addkebun_viewmodel.dart';
 import 'db.dart';
 
 class TambahKebunPage extends StatefulWidget {
@@ -34,37 +36,48 @@ class _TambahKebunPageState extends State<TambahKebunPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.green,
-            title: Text("Tambah Kebun"),
-            bottom: PreferredSize(
-              preferredSize: Size(50,50),
-              child: Container(
-                color: Colors.white,
-                child: TabBar(
-                  labelColor: Colors.black,
-                  tabs: [
-                    Tab(text: "Alamat"),
-                    Tab(text: "Kebun"),
-                    Tab(text: "Dokumen"),
-                    Tab(text: "Sertifikasi"),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              TambahKebun(),
-              KebunTabMenu(),
-              DokumenTabMenu(),
-              SertifikasiPage()
-            ],
-          ),
-        )
+    return ChangeNotifierProvider<AddKebunViewModel>(
+      create: (context) => AddKebunViewModel(),
+      child: Builder(
+        builder: (context) {
+          return Consumer<AddKebunViewModel>(
+              builder: (context, viewmodel, child) {
+                return DefaultTabController(
+                    length: 4,
+                    child: Scaffold(
+                      appBar: AppBar(
+                        backgroundColor: Colors.green,
+                        title: Text("Tambah Kebun"),
+                        bottom: PreferredSize(
+                          preferredSize: Size(50,50),
+                          child: Container(
+                            color: Colors.white,
+                            child: TabBar(
+                              labelColor: Colors.black,
+                              tabs: [
+                                Tab(text: "Alamat"),
+                                Tab(text: "Kebun"),
+                                Tab(text: "Dokumen"),
+                                Tab(text: "Sertifikasi"),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      body: TabBarView(
+                        children: [
+                          TambahKebun(parentViewModel: viewmodel),
+                          KebunTabMenu(parentViewModel: viewmodel),
+                          DokumenTabMenu(),
+                          SertifikasiPage()
+                        ],
+                      ),
+                    )
+                );
+              }
+          );
+        },
+      ),
     );
   }
 }

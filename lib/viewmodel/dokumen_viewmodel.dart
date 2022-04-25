@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taniku/model/response_dokumen.dart';
@@ -50,9 +51,9 @@ class DokumenViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void addDokumen(String dokumen, String nodokumen, BuildContext context) async {
+  void addDokumen(String dokumen, String nodokumen, Uint8List foto, BuildContext context) async {
     await _dbLocal.open();
-    await _dbLocal.addDokumen(dokumen, nodokumen, context);
+    await _dbLocal.addDokumen(dokumen, nodokumen, foto, context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Berhasil Tambah Data")));
     getListDokumen(context);
     notifyListeners();
@@ -89,9 +90,9 @@ class DokumenViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void editDokumen(int id, String dokumen, String nodokumen, BuildContext context) async {
+  void editDokumen(int id, String dokumen, String nodokumen, Uint8List foto, BuildContext context) async {
     await _dbLocal.open();
-    await _dbLocal.editDokumen(id, dokumen, nodokumen, context);
+    await _dbLocal.editDokumen(id, dokumen, nodokumen, foto, context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Berhasil Edit Data")));
     getListDokumen(context);
     notifyListeners();

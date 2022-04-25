@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -26,25 +27,11 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
 
   File? image;
 
-  // ---------------------- Pemanggilan Database -----------------------------
-  // List<Map> listData = [];
-  // MyDb mydb = MyDb();
-  //
-  // void getData(){
-  //   Future.delayed(const Duration(milliseconds: 500),() async {
-  //     listData = await mydb.db.rawQuery('SELECT * FROM users');
-  //     setState(() { });
-  //   });
-  // }
-
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
       if(image == null) return;
-
       final imageTemp = File(image.path);
-
       setState(() => this.image = imageTemp);
     } on PlatformException catch(e) {
       print('Failed to pick image: $e');
@@ -54,11 +41,8 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
   Future pickImageC() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
-
       if(image == null) return;
-
       final imageTemp = File(image.path);
-
       setState(() => this.image = imageTemp);
     } on PlatformException catch(e) {
       print('Failed to pick image: $e');
@@ -83,7 +67,6 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(25),
-                    child: Form(
                       child: Column(
                         children: [
                           Center(
@@ -181,7 +164,8 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                     child: Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Icon(Icons.image_outlined, size: 100,),
+                                                        image != null ? Image.file(image!, width: 50, height: 50,):
+                                                        Icon(Icons.image_outlined, size: 50,),
                                                         //SizedBox(width: 50,),
                                                         ElevatedButton(
                                                           child: Text("Unggah", style: TextStyle(color: Colors.orange, fontSize: 18)),
@@ -205,12 +189,16 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                                     Divider(thickness: 2, color: Colors.red.shade100),
                                                                     SizedBox(height: 10,),
                                                                     InkWell(
-                                                                      onTap: () {},
+                                                                      onTap: () {
+                                                                        pickImage();
+                                                                      },
                                                                       child: Text("Ambil Gambar dari Galeri", style: TextStyle(color: Colors.black87, fontSize: 18),),
                                                                     ),
                                                                     SizedBox(height: 20,),
                                                                     InkWell(
-                                                                      onTap: () {},
+                                                                      onTap: () {
+                                                                        pickImageC();
+                                                                      },
                                                                       child: Text("Ambil Foto dari Kamera", style: TextStyle(color: Colors.black87, fontSize: 18),),
                                                                     ),
                                                                   ],
@@ -258,11 +246,14 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                     minimumSize: Size(10,50),
                                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                                   ),
-                                                  onPressed:() {
+                                                  onPressed:() async {
                                                     Navigator.pop(context);
-                                                    viewmodel.addDokumen(_dokumen, nomor.text, context);
-                                                    _dokumen = "";
-                                                    nomor.text = "";
+                                                    Uint8List foto = await image!.readAsBytes();
+                                                    viewmodel.addDokumen(_dokumen, nomor.text, foto, context);
+                                                    print(_dokumen);
+                                                    print(nomor.text);
+                                                    //_dokumen = "";
+                                                    //nomor.text = "";
                                                   },
                                                 )
                                               ],
@@ -290,16 +281,12 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                         subtitle: Text("Nomor :" + viewmodel.listdokumen[index].nodokumen.toString()),
                                         trailing: Wrap(children: [
                                           IconButton(onPressed: () async {
+                                            // --------------------------------- Untuk data null -----------------------------------
+                                            await viewmodel.getDokumenById(int.parse(viewmodel.listdokumen[index].id.toString()), context);
+                                            var iddokumen = viewmodel.dataDok.dokumen.toString();
+                                            var nomordokumen = viewmodel.dataDok.nodokumen.toString();
+                                            // --------------------------------- Untuk data null -----------------------------------
                                             showDialog(context: context, builder: (_) {
-                                              var data = viewmodel.getDokumenById(int.parse(viewmodel.listdokumen[index].id.toString()), context);
-                                              var iddokumen;
-                                              var nomordokumen;
-                                              //if (data != null){
-                                                iddokumen = viewmodel.dataDok.dokumen.toString();
-                                                nomordokumen = viewmodel.dataDok.nodokumen.toString();
-                                              //} else {
-
-                                              //}
                                               return AlertDialog(
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.all(Radius.circular(20.0))
@@ -314,7 +301,7 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                         topLeft: Radius.circular(20.0)
                                                     ),
                                                   ),
-                                                  child: Text("Tambah Sertifikat",
+                                                  child: Text("Ubah Dokumen",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 18
@@ -425,9 +412,12 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                               minimumSize: Size(10,50),
                                                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                                             ),
-                                                            onPressed:() {
+                                                            onPressed:() async {
                                                               Navigator.pop(context);
-                                                              viewmodel.editDokumen(viewmodel.listdokumen[index].id ?? 0, _dokumen, nomor.text, context);
+                                                              Uint8List foto = await image!.readAsBytes();
+                                                              viewmodel.editDokumen(viewmodel.listdokumen[index].id ?? 0, _dokumen, nomor.text, foto, context);
+                                                              print(_dokumen);
+                                                              print(nomor.text);
                                                             },
                                                           )
                                                         ],
@@ -450,9 +440,40 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                       ));
                                 }),
                           ),
+                          SizedBox(height: 20,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                child: Text("Kembali", style: TextStyle(color: Colors.orange, fontSize: 18)),
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.white,
+                                  primary: Colors.white,
+                                  onSurface: Colors.grey,
+                                  minimumSize: Size(150,60),
+                                  side: BorderSide(color: Colors.orange, width: 2),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                ),
+                                onPressed:() {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              SizedBox(width: 10,),
+                              ElevatedButton(
+                                child: Text("Selanjutnya", style: TextStyle(color: Colors.white, fontSize: 18)),
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.white,
+                                  primary: Colors.orange,
+                                  onSurface: Colors.grey,
+                                  minimumSize: Size(150,60),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                ),
+                                onPressed:() {},
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                    ),
                   ),
                 ),
               );

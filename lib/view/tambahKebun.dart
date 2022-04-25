@@ -6,11 +6,14 @@ import 'package:taniku/model/response_kelurahan.dart';
 import '../model/response_kecamatan.dart';
 import '../model/response_kota.dart';
 import '../model/response_provinsi.dart';
+import '../viewmodel/addkebun_viewmodel.dart';
 import '../viewmodel/tambahkebun_viewmodel.dart';
 import 'homePage.dart';
 
 class TambahKebun extends StatefulWidget {
-  const TambahKebun({Key? key}) : super(key: key);
+  final AddKebunViewModel parentViewModel;
+
+  const TambahKebun({Key? key, required this.parentViewModel}) : super(key: key);
 
   @override
   State<TambahKebun> createState() => _TambahKebunState();
@@ -363,6 +366,14 @@ class _TambahKebunState extends State<TambahKebun> {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                   ),
                                   onPressed:() {
+                                    widget.parentViewModel.addKebunModel.alamat=alamatController.text;
+                                    widget.parentViewModel.addKebunModel.rt=rtController.text;
+                                    widget.parentViewModel.addKebunModel.rw=rwController.text;
+                                    widget.parentViewModel.addKebunModel.provinsiId=_provinsi.text;
+                                    widget.parentViewModel.addKebunModel.kabupatenKotaId=_kota.text;
+                                    widget.parentViewModel.addKebunModel.kecamatanId=_kecamatan.text;
+                                    widget.parentViewModel.addKebunModel.kelurahanId=_kelurahan.text;
+                                    widget.parentViewModel.addKebunModel.kodePos=kodeposController.text;
                                     // print('Alamat = ' + alamatController.toString());
                                     // print('Rt/Rw = ' +
                                     //     rtController.toString() + "/" + rwController.toString());

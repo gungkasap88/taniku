@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -22,7 +24,8 @@ class MyDb {
                     CREATE TABLE IF NOT EXISTS users( 
                           id integer not null primary key autoincrement,
                           dokumen varchar(255) not null,
-                          nodokumen varchar(255) not null
+                          nodokumen varchar(255) not null,
+                          foto BLOB
                       );
 
                       //create more table here
@@ -34,7 +37,9 @@ class MyDb {
                     CREATE TABLE IF NOT EXISTS sertifikasi( 
                           id integer not null primary key autoincrement,
                           sertifikat varchar(255) not null,
-                          nosertifikat varchar(255) not null
+                          nosertifikat varchar(255) not null,
+                          tanggal varchar(255) not null,
+                          foto BLOB
                       );
 
                       //create more table here
@@ -65,15 +70,16 @@ class MyDb {
           id: data[i]['id'],
           dokumen: data[i]['dokumen'],
           nodokumen: data[i]['nodokumen'],
+          foto: data[i]['foto'],
         );
       });
     }
     return [];
   }
 
-  addDokumen(String dokumen, String nodokumen, BuildContext context) async {
-    await db!.rawInsert("INSERT INTO users (dokumen, nodokumen) VALUES (?, ?);",
-        [dokumen, nodokumen]);
+  addDokumen(String dokumen, String nodokumen, Uint8List foto, BuildContext context) async {
+    await db!.rawInsert("INSERT INTO users (dokumen, nodokumen, foto) VALUES (?, ?, ?);",
+        [dokumen, nodokumen, foto]);
   }
 
   Future<ListDokumenModel?> getDokumenById(int id, BuildContext context) async {
@@ -85,14 +91,15 @@ class MyDb {
         id: maps[0]['id'],
         dokumen: maps[0]['dokumen'],
         nodokumen: maps[0]['nodokumen'],
+        foto: maps[0]['foto'],
       );
     }
     return null;
   }
 
-  editDokumen(int id, String dokumen, String nodokumen, BuildContext context) async {
-    await db!.rawInsert("UPDATE users SET dokumen = ?, nodokumen = ? WHERE id = ?",
-        [dokumen, nodokumen, id]);
+  editDokumen(int id, String dokumen, String nodokumen, Uint8List foto, BuildContext context) async {
+    await db!.rawInsert("UPDATE users SET dokumen = ?, nodokumen = ?, foto = ? WHERE id = ?",
+        [dokumen, nodokumen, id, foto]);
   }
 
   deleteDokumen(int id, BuildContext context) async {
@@ -109,15 +116,18 @@ class MyDb {
           id: data[i]['id'],
           sertifikat: data[i]['sertifikat'],
           nosertifikat: data[i]['nosertifikat'],
+          tanggal: data[i]['tanggal'],
+          foto: data[i]['foto'],
+
         );
       });
     }
     return [];
   }
 
-  addUser(String sertifikat, String nosertifikat, BuildContext context) async {
-    await db!.rawInsert("INSERT INTO sertifikasi (sertifikat, nosertifikat) VALUES (?, ?);",
-        [sertifikat, nosertifikat]);
+  addUser(String sertifikat, String nosertifikat, String tanggal, Uint8List foto, BuildContext context) async {
+    await db!.rawInsert("INSERT INTO sertifikasi (sertifikat, nosertifikat, tanggal, foto) VALUES (?, ?, ?, ?);",
+        [sertifikat, nosertifikat, tanggal, foto]);
   }
 
   Future<ListUserModel?> getUserById(int id, BuildContext context) async {
@@ -129,14 +139,16 @@ class MyDb {
         id: maps[0]['id'],
         sertifikat: maps[0]['sertifikat'],
         nosertifikat: maps[0]['nosertifikat'],
+        tanggal: maps[0]['tanggal'],
+        foto: maps[0]['foto'],
       );
     }
     return null;
   }
 
-  editUser(int id, String sertifikat, String nosertifikat, BuildContext context) async {
-    await db!.rawInsert("UPDATE sertifikasi SET sertifikat = ?, nosertifikat = ? WHERE id = ?",
-        [sertifikat, nosertifikat, id]);
+  editUser(int id, String sertifikat, String nosertifikat, String tanggal, Uint8List foto, BuildContext context) async {
+    await db!.rawInsert("UPDATE sertifikasi SET sertifikat = ?, nosertifikat = ?, foto = ?, tanggal = ?, foto = ? WHERE id = ?",
+        [sertifikat, nosertifikat, tanggal, foto, id]);
   }
 
   deleteUser(int id, BuildContext context) async {

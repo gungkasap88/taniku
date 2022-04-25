@@ -8,9 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../model/response_tipe_lahan.dart';
+import '../viewmodel/addkebun_viewmodel.dart';
 
 class KebunTabMenu extends StatefulWidget {
-  const KebunTabMenu({Key? key}) : super(key: key);
+  final AddKebunViewModel parentViewModel;
+
+  const KebunTabMenu({Key? key, required this.parentViewModel}) : super(key: key);
 
   @override
   State<KebunTabMenu> createState() => _KebunTabMenuState();
@@ -369,7 +372,9 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      image != null ? Image.file(image!, width: 100, height: 100,):
                       Icon(Icons.image_outlined, size: 125,),
+                      //Icon(Icons.image_outlined, size: 125,),
                       SizedBox(width: 50,),
                       ElevatedButton(
                         child: Text("Unggah", style: TextStyle(color: Colors.orange, fontSize: 18)),
@@ -442,7 +447,16 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
                         minimumSize: Size(150,60),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       ),
-                      onPressed:() {},
+                      onPressed:() {
+                        // widget.parentViewModel.addKebunModel.alamat=alamatController.text;
+                        // widget.parentViewModel.addKebunModel.rt=rtController.text;
+                        // widget.parentViewModel.addKebunModel.rw=rwController.text;
+                        // widget.parentViewModel.addKebunModel.provinsiId=_provinsi.text;
+                        // widget.parentViewModel.addKebunModel.kabupatenKotaId=_kota.text;
+                        // widget.parentViewModel.addKebunModel.kecamatanId=_kecamatan.text;
+                        // widget.parentViewModel.addKebunModel.kelurahanId=_kelurahan.text;
+                        // widget.parentViewModel.addKebunModel.kodePos=kodeposController.text;
+                      },
                     )
                   ],
                 ),

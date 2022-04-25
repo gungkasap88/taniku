@@ -1,26 +1,17 @@
-import 'dart:typed_data';
-
-class ListUserModel {
+class ListSertifikatModel {
   int? id;
   String? sertifikat;
   String? nosertifikat;
-  String? tanggal;
-  Uint8List? foto;
 
-  ListUserModel(
+  ListSertifikatModel(
       {this.id,
         this.sertifikat,
-        this.nosertifikat,
-        this.tanggal,
-        this.foto
-      });
+        this.nosertifikat,});
 
-  ListUserModel.fromJson(Map<String, dynamic> json) {
+  ListSertifikatModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     sertifikat = json['sertifikat'];
     nosertifikat = json['nosertifikat'];
-    tanggal = json['tanggal'];
-    foto = json['foto'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,8 +19,6 @@ class ListUserModel {
     data['id'] = id;
     data['sertifikat'] = sertifikat;
     data['nosertifikat'] = nosertifikat;
-    data['tanggal'] = tanggal;
-    data['foto'] = foto;
     return data;
   }
 }
