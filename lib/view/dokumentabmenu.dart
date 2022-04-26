@@ -11,10 +11,13 @@ import 'package:provider/provider.dart';
 import 'package:taniku/viewmodel/dokumen_viewmodel.dart';
 
 import '../model/response_dokumen.dart';
+import '../viewmodel/addkebun_viewmodel.dart';
 import 'db.dart';
 
 class DokumenTabMenu extends StatefulWidget {
-  const DokumenTabMenu({Key? key}) : super(key: key);
+  final AddKebunViewModel parentViewModel;
+
+  const DokumenTabMenu({Key? key,  required this.parentViewModel}) : super(key: key);
 
   @override
   State<DokumenTabMenu> createState() => _DokumenTabMenuState();
@@ -575,7 +578,12 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                   minimumSize: Size(150,60),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                 ),
-                                onPressed:() {},
+                                onPressed:() async {
+                                  await viewmodel.convertDokumenList(context);
+                                  widget.parentViewModel.addKebunModel.listDokumen = viewmodel.dokumenApi;
+
+                                  print(jsonEncode(widget.parentViewModel.addKebunModel));
+                                },
                               )
                             ],
                           ),

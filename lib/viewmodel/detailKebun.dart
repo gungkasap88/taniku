@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'list_kebun_viewmodel.dart';
@@ -13,6 +16,9 @@ class detailKebun extends StatefulWidget {
 }
 
 class _detailKebunState extends State<detailKebun> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ListKebunViewModel>(
@@ -31,7 +37,7 @@ class _detailKebunState extends State<detailKebun> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          // Detail Kebun
+                          // ---------------------------------- Detail Kebun -----------------------------
                           ListView.builder(
                             shrinkWrap: true,
                             itemCount: viewModel.getDetail.length,
@@ -53,6 +59,7 @@ class _detailKebunState extends State<detailKebun> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
+                                        const SizedBox(height: 8,),
                                         SizedBox(height: 10,),
                                         Text('Kebun Petani',
                                           style: TextStyle(

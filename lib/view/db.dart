@@ -86,7 +86,7 @@ class MyDb {
         return ListDokumen(
           dokumenId: result[index]['dokumen'],
           nomor: result[index]['nodokumen'],
-          foto: result[index]['foto']
+          foto: ' '
         );
       });
     }

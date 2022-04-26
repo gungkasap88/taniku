@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:taniku/viewmodel/detailKebun.dart';
 import 'package:taniku/viewmodel/home_viewmodel.dart';
@@ -14,6 +17,8 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  // Untuk Google Maps
+  Completer<GoogleMapController> _completer = Completer();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
@@ -223,7 +228,43 @@ class _homePageState extends State<homePage> {
                                                         )
                                                       ],
                                                     ),
-                                                  )
+                                                  ),
+                                                  SizedBox(height: 20,),
+                                                  Container(
+                                                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                                                    //height: height*0.3,
+                                                    height: 400,
+                                                    width: double.infinity,
+                                                    child: GoogleMap(
+                                                      mapType: MapType.normal,
+                                                      markers: <Marker> {Marker(markerId: const MarkerId("1"),
+                                                          position: LatLng(double.parse(viewModel.getKebun[index].latitude.toString()),
+                                                              double.parse(viewModel.getKebun[index].longitude.toString())))},
+                                                      initialCameraPosition: CameraPosition(
+                                                          target: LatLng(double.parse(viewModel.getKebun[index].latitude.toString()),
+                                                              double.parse(viewModel.getKebun[index].longitude.toString())), zoom: 15),
+                                                      onMapCreated: (GoogleMapController controller) {
+                                                        _completer.complete(controller);
+                                                      },
+                                                    ),
+                                                  ),
+                                                  // Container(
+                                                  //   margin: EdgeInsets.only(left: 10, right: 10),
+                                                  //   //height: height*0.3,
+                                                  //   width: double.infinity,
+                                                  //   child: GoogleMap(
+                                                  //     mapType: MapType.normal,
+                                                  //     markers: <Marker> {Marker(markerId: const MarkerId("1"),
+                                                  //         position: LatLng(double.parse(viewModel.getDetail[index].latitude.toString()),
+                                                  //             double.parse(viewModel.getDetail[index].longitude.toString())))},
+                                                  //     initialCameraPosition: CameraPosition(
+                                                  //         target: LatLng(double.parse(viewModel.getDetail[index].latitude.toString()),
+                                                  //             double.parse(viewModel.getDetail[index].longitude.toString())), zoom: 15),
+                                                  //     onMapCreated: (GoogleMapController controller) {
+                                                  //       _completer.complete(controller);
+                                                  //     },
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                             ),

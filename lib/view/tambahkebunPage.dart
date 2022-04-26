@@ -68,7 +68,7 @@ class _TambahKebunPageState extends State<TambahKebunPage> {
                         children: [
                           TambahKebun(parentViewModel: viewmodel),
                           KebunTabMenu(parentViewModel: viewmodel),
-                          DokumenTabMenu(),
+                          DokumenTabMenu(parentViewModel: viewmodel),
                           SertifikasiPage()
                         ],
                       ),
