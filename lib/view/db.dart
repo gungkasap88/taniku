@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:taniku/model/response_add_kebun.dart';
 
 import '../model/response_list_dokumen.dart';
 import '../model/response_list_user.dart';
@@ -77,6 +78,22 @@ class MyDb {
     return [];
   }
 
+  // --------------------------------- Ini untuk Pemanggilan Convert Database -----------------------------------
+  Future<List<ListDokumen>> convertListDokumen() async {
+    final List<Map<String, dynamic>> result = await db.query('users', orderBy: 'id ASC');
+    if (result.isNotEmpty){
+      return List.generate(result.length, (index) {
+        return ListDokumen(
+          dokumenId: result[index]['dokumen'],
+          nomor: result[index]['nodokumen'],
+          foto: result[index]['foto']
+        );
+      });
+    }
+    return [];
+  }
+  // --------------------------------- Ini untuk Pemanggilan Convert Database -----------------------------------
+
   addDokumen(String dokumen, String nodokumen, Uint8List foto, BuildContext context) async {
     await db!.rawInsert("INSERT INTO users (dokumen, nodokumen, foto) VALUES (?, ?, ?);",
         [dokumen, nodokumen, foto]);
@@ -99,7 +116,7 @@ class MyDb {
 
   editDokumen(int id, String dokumen, String nodokumen, Uint8List foto, BuildContext context) async {
     await db!.rawInsert("UPDATE users SET dokumen = ?, nodokumen = ?, foto = ? WHERE id = ?",
-        [dokumen, nodokumen, id, foto]);
+        [dokumen, nodokumen, foto, id]);
   }
 
   deleteDokumen(int id, BuildContext context) async {

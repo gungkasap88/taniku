@@ -30,6 +30,7 @@ class _SertifikasiPageState extends State<SertifikasiPage> {
   var date2C = TextEditingController();
   var tgl;
 
+  File? imageedit;
   File? image;
 
   DateTime selectedDate = DateTime.now();
@@ -99,6 +100,34 @@ class _SertifikasiPageState extends State<SertifikasiPage> {
       final imageTemp = File(image.path);
 
       setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickImageEdit() async {
+    try {
+      final imageEdit = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if(imageEdit == null) return;
+
+      final imageTempEdit = File(imageEdit.path);
+
+      setState(() => this.imageedit = imageTempEdit);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickImageCEdit() async {
+    try {
+      final imageEdit = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if(imageEdit == null) return;
+
+      final imageTempEdit = File(imageEdit.path);
+
+      setState(() => this.imageedit = imageTempEdit);
     } on PlatformException catch(e) {
       print('Failed to pick image: $e');
     }
@@ -613,8 +642,13 @@ class _SertifikasiPageState extends State<SertifikasiPage> {
                                                                   child: Row(
                                                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                                     children: [
-                                                                      image != null ? Image.file(image!, width: 50, height: 50,):
-                                                                      Icon(Icons.image_outlined, size: 50,),
+                                                                      Container(
+                                                                        width: 60,
+                                                                        height: 80,
+                                                                        child: imageedit != null ? Image.memory(viewmodel.listuser[index].foto!) :
+                                                                        //Icon(Icons.image_outlined, size: 50,),
+                                                                        Image.memory(viewmodel.listuser[index].foto!),
+                                                                      ),
                                                                       //Icon(Icons.image_outlined, size: 125,),
                                                                       SizedBox(width: 50,),
                                                                       ElevatedButton(

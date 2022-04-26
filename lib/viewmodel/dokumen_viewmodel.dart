@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:taniku/model/response_add_kebun.dart';
 import 'package:taniku/model/response_dokumen.dart';
 import 'package:taniku/service/api/jenisdokumen_api.dart';
 import 'package:taniku/view/db.dart';
@@ -14,10 +15,12 @@ class DokumenViewModel extends ChangeNotifier{
   ListDokumenModel dataDok = ListDokumenModel();
   List<DataDokumen> dataDokumen = [];
   List<ListDokumenModel> listdokumen = [];
+  List<ListDokumen> dokumenApi = []; // Ini untuk convert agar masuk ke AddKebun
 
   DokumenViewModel(BuildContext context){
     getDataDokumen(context);
     getListDokumen(context);
+    convertDokumenList(context);
     //getDokumenById(id, context);
   }
 
@@ -95,6 +98,19 @@ class DokumenViewModel extends ChangeNotifier{
     await _dbLocal.editDokumen(id, dokumen, nodokumen, foto, context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Berhasil Edit Data")));
     getListDokumen(context);
+    notifyListeners();
+  }
+
+  convertDokumenList(BuildContext context) async {
+    await _dbLocal.open();
+    final response = await _dbLocal.convertListDokumen();
+    if (response.isNotEmpty) {
+      dokumenApi.clear(); // Ada di response add kebun bagian dokumen
+      dokumenApi = response;
+    } else {
+      print("Tidak Ada Data");
+    }
+    print(response.length);
     notifyListeners();
   }
 

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:taniku/model/response_jenis_bibit.dart';
 
 import '../model/response_tipe_lahan.dart';
 import '../viewmodel/addkebun_viewmodel.dart';
@@ -28,6 +29,7 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
   TextEditingController produksiC = TextEditingController();
 
   var _tipe;
+  var _jenis;
 
   File? image;
 
@@ -57,6 +59,38 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
     if (response.error == null) {
       setState(() {
         dataTipeLahan = response.data!;
+      });
+    } else {
+      print(response.error.toString());
+    }
+  }
+
+  //note: ini dari API Dropdown Jenis Bibit
+  List<DataBibit> dataJenisBibit = [];
+  final String apiUrlB = "http://34.126.79.39:81/api/niaga/listJenisBibit";
+
+  Future<ResponseJenisBibit> getJenisBibit(BuildContext context) async {
+    var uri = Uri.parse(apiUrlB).replace();
+    try{
+      final response = await http
+          .get(uri, headers: {})
+          .timeout(const Duration(seconds: 30));
+      if (response.statusCode == HttpStatus.ok) {
+        print(jsonDecode(response.body));
+        return ResponseJenisBibit.fromJson(jsonDecode(response.body));
+      } else {
+        return ResponseJenisBibit.withError("Gagal load data");
+      }
+    } on TimeoutException catch (_) {
+      return ResponseJenisBibit.withError("Waktu Habis, Silahkan coba kembali");
+    }
+  }
+
+  void getDataJenisBibit(BuildContext context) async {
+    final response = await getJenisBibit(context);
+    if (response.error == null) {
+      setState(() {
+        dataJenisBibit = response.data!;
       });
     } else {
       print(response.error.toString());
@@ -94,6 +128,7 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
   @override
   void initState() {
     getDataTipeLahan(context);
+    getDataJenisBibit(context);
     super.initState();
   }
 
@@ -285,17 +320,17 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
                                 ),
                               ),
                               isExpanded: true,
-                              value: _tipe,
-                              items: dataTipeLahan.map((DataTipe provinsi) {
+                              value: _jenis,
+                              items: dataJenisBibit.map((DataBibit provinsi) {
                                 return DropdownMenuItem(
-                                  value: provinsi.statusLahanId.toString(),
-                                  child: Text(provinsi.statusLahanName.toString()),
+                                  value: provinsi.jenisBibitName.toString(),
+                                  child: Text(provinsi.jenisBibitName.toString()),
                                 );
                               }).toList(),
                               onChanged: (newValueProvinsi) {
                                 setState(() {
-                                  print('Provinsi = >' +newValueProvinsi.toString());
-                                  _tipe = newValueProvinsi.toString();
+                                  print('Jenis Bibit = >' +newValueProvinsi.toString());
+                                  _jenis = newValueProvinsi.toString();
                                   //_tipe = null;
 
 
@@ -314,7 +349,7 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
                             ),
                             SizedBox(height: 10,),
                             TextFormField(
-                              controller: luaskebunC,
+                              controller: tahuntanamC,
                               decoration: new InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                                 hintText: "",
@@ -448,14 +483,14 @@ class _KebunTabMenuState extends State<KebunTabMenu> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       ),
                       onPressed:() {
-                        // widget.parentViewModel.addKebunModel.alamat=alamatController.text;
-                        // widget.parentViewModel.addKebunModel.rt=rtController.text;
-                        // widget.parentViewModel.addKebunModel.rw=rwController.text;
-                        // widget.parentViewModel.addKebunModel.provinsiId=_provinsi.text;
-                        // widget.parentViewModel.addKebunModel.kabupatenKotaId=_kota.text;
-                        // widget.parentViewModel.addKebunModel.kecamatanId=_kecamatan.text;
-                        // widget.parentViewModel.addKebunModel.kelurahanId=_kelurahan.text;
-                        // widget.parentViewModel.addKebunModel.kodePos=kodeposController.text;
+                        widget.parentViewModel.addKebunModel.luasKebun = luaskebunC.text;
+                        widget.parentViewModel.addKebunModel.potensiProduksi = produksiC.text;
+                        widget.parentViewModel.addKebunModel.tahunTanamId = tahuntanamC.text;
+                        widget.parentViewModel.addKebunModel.jenisBibitId = _jenis;
+                        widget.parentViewModel.addKebunModel.jumlahPohon = jumlahpohonC.text;
+                        widget.parentViewModel.addKebunModel.statusLahanId = _tipe;
+
+                        print(jsonEncode(widget.parentViewModel.addKebunModel));
                       },
                     )
                   ],

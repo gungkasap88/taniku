@@ -23,9 +23,14 @@ class DokumenTabMenu extends StatefulWidget {
 class _DokumenTabMenuState extends State<DokumenTabMenu> {
 
   TextEditingController nomor = TextEditingController();
+  TextEditingController nomoredit = TextEditingController();
+
+
   var _dokumen;
+  var _dokumenedit;
 
   File? image;
+  File? imageedit;
 
   Future pickImage() async {
     try {
@@ -44,6 +49,34 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
       if(image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickImageEdit() async {
+    try {
+      final imageEdit = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if(imageEdit == null) return;
+
+      final imageTempEdit = File(imageEdit.path);
+
+      setState(() => this.imageedit = imageTempEdit);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickImageCEdit() async {
+    try {
+      final imageEdit = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if(imageEdit == null) return;
+
+      final imageTempEdit = File(imageEdit.path);
+
+      setState(() => this.imageedit = imageTempEdit);
     } on PlatformException catch(e) {
       print('Failed to pick image: $e');
     }
@@ -164,6 +197,13 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                     child: Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
+                                                        // Container(
+                                                        //   width: 60,
+                                                        //   height: 80,
+                                                        //   child: image != null ? Icon(Icons.image_outlined, size: 50,) :
+                                                        //   //Icon(Icons.image_outlined, size: 50,),
+                                                        //   Image.memory(viewmodel.listdokumen[index].foto!),
+                                                        // ),
                                                         image != null ? Image.file(image!, width: 50, height: 50,):
                                                         Icon(Icons.image_outlined, size: 50,),
                                                         //SizedBox(width: 50,),
@@ -283,8 +323,10 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                           IconButton(onPressed: () async {
                                             // --------------------------------- Untuk data null -----------------------------------
                                             await viewmodel.getDokumenById(int.parse(viewmodel.listdokumen[index].id.toString()), context);
-                                            var iddokumen = viewmodel.dataDok.dokumen.toString();
-                                            var nomordokumen = viewmodel.dataDok.nodokumen.toString();
+                                            // var iddokumen = viewmodel.dataDok.dokumen.toString();
+                                            // var nomordokumen = viewmodel.dataDok.nodokumen.toString();
+                                            _dokumenedit = viewmodel.dataDok.dokumen.toString();
+                                            nomoredit.text = viewmodel.dataDok.nodokumen.toString();
                                             // --------------------------------- Untuk data null -----------------------------------
                                             showDialog(context: context, builder: (_) {
                                               return AlertDialog(
@@ -310,7 +352,7 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                 ),
                                                 content: Container(
                                                   width: 500,
-                                                  height: 700,
+                                                  height: 350,
                                                   child: Form(
                                                     child: SingleChildScrollView(
                                                       child: Padding(
@@ -326,6 +368,7 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                             ),
                                                             SizedBox(height: 10,),
                                                             DropdownButtonFormField(
+                                                              //value: _dokumenedit,
                                                               decoration: new InputDecoration(
                                                                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                                                                 border: OutlineInputBorder(
@@ -338,8 +381,8 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                                 ),
                                                               ),
                                                               isExpanded: true,
-                                                              hint: Text("$iddokumen"),
-                                                              value: _dokumen,
+                                                              //hint: Text("$iddokumen"),
+                                                              value: _dokumenedit,
                                                               items: viewmodel.dataDokumen.map((DataDokumen dokumen) {
                                                                 return DropdownMenuItem(
                                                                   value: dokumen.dokumenName.toString(),
@@ -349,7 +392,7 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                               onChanged: (newSertifikasi) {
                                                                 setState(() {
                                                                   print('Tipe Dokumen = >' +newSertifikasi.toString());
-                                                                  _dokumen = newSertifikasi.toString();
+                                                                  _dokumenedit = newSertifikasi.toString();
                                                                 });
                                                               },
                                                             ),
@@ -362,10 +405,9 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                             ),
                                                             SizedBox(height: 10,),
                                                             TextFormField(
-                                                              controller: nomor,
+                                                              controller: nomoredit,
                                                               decoration: new InputDecoration(
                                                                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                                                                hintText: nomordokumen,
                                                                 border: OutlineInputBorder(
                                                                   borderSide: new BorderSide(color: Colors.black, width: 2),
                                                                   borderRadius: new BorderRadius.circular(25),
@@ -374,6 +416,70 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                                   borderSide: new BorderSide(color: Colors.black),
                                                                   borderRadius: new BorderRadius.circular(25.7),
                                                                 ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 20,),
+                                                            Row(
+                                                              children: [
+                                                                Text("Unggah Dokumen"),
+                                                                Text(" *", style: TextStyle(color: Colors.red),),
+                                                              ],
+                                                            ),
+                                                            SizedBox(height: 10,),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                children: [
+                                                                  Container(
+                                                                    width: 60,
+                                                                    height: 80,
+                                                                    child: imageedit != null ? Image.memory(viewmodel.listdokumen[index].foto!) :
+                                                                    //Icon(Icons.image_outlined, size: 50,),
+                                                                    Image.memory(viewmodel.listdokumen[index].foto!),
+                                                                  ),
+                                                                  SizedBox(width: 50,),
+                                                                  ElevatedButton(
+                                                                    child: Text("Unggah", style: TextStyle(color: Colors.orange, fontSize: 18)),
+                                                                    style: ElevatedButton.styleFrom(
+                                                                      onPrimary: Colors.white,
+                                                                      primary: Colors.white,
+                                                                      onSurface: Colors.grey,
+                                                                      minimumSize: Size(100,60),
+                                                                      side: BorderSide(color: Colors.orange, width: 2),
+                                                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30),),
+                                                                    ),
+                                                                    onPressed:() {
+                                                                      showDialog(context: context, builder: (_) => AlertDialog(
+                                                                        title: Text('Pilih Aksi'),
+                                                                        content: Container(
+                                                                          width: 500,
+                                                                          height: 120,
+                                                                          child: Column(
+                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Divider(thickness: 2, color: Colors.red.shade100),
+                                                                              SizedBox(height: 10,),
+                                                                              InkWell(
+                                                                                onTap: () {
+                                                                                  pickImage();
+                                                                                },
+                                                                                child: Text("Ambil Gambar dari Galeri", style: TextStyle(color: Colors.black87, fontSize: 18),),
+                                                                              ),
+                                                                              SizedBox(height: 20,),
+                                                                              InkWell(
+                                                                                onTap: () {
+                                                                                  pickImageC();
+                                                                                },
+                                                                                child: Text("Ambil Foto dari Kamera", style: TextStyle(color: Colors.black87, fontSize: 18),),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ));
+                                                                    },
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ],
@@ -414,10 +520,11 @@ class _DokumenTabMenuState extends State<DokumenTabMenu> {
                                                             ),
                                                             onPressed:() async {
                                                               Navigator.pop(context);
-                                                              Uint8List foto = await image!.readAsBytes();
-                                                              viewmodel.editDokumen(viewmodel.listdokumen[index].id ?? 0, _dokumen, nomor.text, foto, context);
-                                                              print(_dokumen);
-                                                              print(nomor.text);
+                                                              Uint8List fotoedit = await image!.readAsBytes();
+                                                              viewmodel.editDokumen(viewmodel.listdokumen[index].id ?? 0, _dokumenedit, nomoredit.text, fotoedit, context);
+                                                              print(_dokumenedit);
+                                                              print(nomoredit.text);
+                                                              print(fotoedit);
                                                             },
                                                           )
                                                         ],

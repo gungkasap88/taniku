@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,9 +8,11 @@ import 'package:taniku/model/response_kelurahan.dart';
 import '../model/response_kecamatan.dart';
 import '../model/response_kota.dart';
 import '../model/response_provinsi.dart';
+import '../service/local/shared_pref_service.dart';
 import '../viewmodel/addkebun_viewmodel.dart';
 import '../viewmodel/tambahkebun_viewmodel.dart';
 import 'homePage.dart';
+import 'kebuntabmenu.dart';
 
 class TambahKebun extends StatefulWidget {
   final AddKebunViewModel parentViewModel;
@@ -365,23 +369,25 @@ class _TambahKebunState extends State<TambahKebun> {
                                     minimumSize: Size(150,60),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                                   ),
-                                  onPressed:() {
-                                    widget.parentViewModel.addKebunModel.alamat=alamatController.text;
-                                    widget.parentViewModel.addKebunModel.rt=rtController.text;
-                                    widget.parentViewModel.addKebunModel.rw=rwController.text;
-                                    widget.parentViewModel.addKebunModel.provinsiId=_provinsi.text;
-                                    widget.parentViewModel.addKebunModel.kabupatenKotaId=_kota.text;
-                                    widget.parentViewModel.addKebunModel.kecamatanId=_kecamatan.text;
-                                    widget.parentViewModel.addKebunModel.kelurahanId=_kelurahan.text;
-                                    widget.parentViewModel.addKebunModel.kodePos=kodeposController.text;
-                                    // print('Alamat = ' + alamatController.toString());
-                                    // print('Rt/Rw = ' +
-                                    //     rtController.toString() + "/" + rwController.toString());
-                                    print('Provinsi id = ' + _provinsi.toString());
-                                    print('Kabupaten id = ' + _kota.toString());
-                                    print('Kecamatan id = ' + _kecamatan.toString());
-                                    print('Kelurahan id = ' + _kelurahan.toString());
-                                    print('Kode Pos = ' + kodeposController.text.toString());
+                                  onPressed:() async {
+                                    widget.parentViewModel.addKebunModel.userId = await shared_pref_service().getStringSharedPref("user_id");
+                                    widget.parentViewModel.addKebunModel.petaniId = await shared_pref_service().getStringSharedPref("petani_id");
+                                    widget.parentViewModel.addKebunModel.alamat = alamatController.text;
+                                    widget.parentViewModel.addKebunModel.rt = rtController.text;
+                                    widget.parentViewModel.addKebunModel.rw = rwController.text;
+                                    widget.parentViewModel.addKebunModel.provinsiId = _provinsi;
+                                    widget.parentViewModel.addKebunModel.kabupatenKotaId = _kota;
+                                    widget.parentViewModel.addKebunModel.kecamatanId = _kecamatan;
+                                    widget.parentViewModel.addKebunModel.kelurahanId = _kelurahan;
+                                    widget.parentViewModel.addKebunModel.kodePos = kodeposController.text;
+                                    print(jsonEncode(widget.parentViewModel.addKebunModel));
+
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => KebunTabMenu(parentViewModel: viewModel),
+                                    //     )
+                                    // );
                                   },
                                 )
                               ],
